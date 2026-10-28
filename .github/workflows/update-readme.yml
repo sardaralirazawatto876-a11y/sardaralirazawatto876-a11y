@@ -1,0 +1,31 @@
+name: Update Profile README
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # This tells GitHub to run the script automatically every day at midnight
+  workflow_dispatch: # This adds a button so you can run it manually whenever you want
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: pip install requests
+        
+      - name: Run update script
+        run: python update_readme.py
+        
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@://github.com'
+          git add README.md
+          git commit -m "Auto-update profile README" || exit 0
+          git push
