@@ -9,7 +9,7 @@ url = f"https://github.com{USERNAME}/repos?sort=updated&per_page=10"
 response = requests.get(url)
 repos = response.json()
 
-# 2. Build the markdown list of projects (filtering out the profile repo itself)
+# 2. Build the markdown list of projects
 project_list_md = ""
 for repo in repos:
     name = repo["name"]
@@ -42,4 +42,4 @@ updated_content = re.sub(
 with open("README.md", "w", encoding="utf-8") as f:
     f.write(updated_content)
 
-print("Profile README successfully updated with latest projects!")
+print("Profile README successfully updated!")
